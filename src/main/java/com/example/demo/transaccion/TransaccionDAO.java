@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface TransaccionDAO {
     List<Transaccion> listar();
+    void guardar(Transaccion transaccion);
 }

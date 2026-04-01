@@ -17,4 +17,9 @@ public class TransaccionServiceImpl implements TransaccionService {
     public List<Transaccion> listar() {
         return dao.listar();
     }
+
+    @Override
+    public void guardar(Transaccion t) {
+        dao.guardar(t);
+    }
 }
