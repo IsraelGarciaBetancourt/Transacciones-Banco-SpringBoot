@@ -30,21 +30,30 @@ public class LoginController {
                         @RequestParam String password,
                         HttpSession session,
                         Model model) {
+
         try {
             Usuario u = usuarioService.buscarPorUsername(username);
 
-            // ... (resto de tus validaciones de password) ...
+            if (!u.getPassword().equals(password)) {
+                model.addAttribute("error", "Contraseña incorrecta");
+                return "login";
+            }
+
+            if (!u.isActivo()) {
+                model.addAttribute("error", "El usuario está desactivado");
+                return "login";
+            }
+
+            // GUARDAR DATOS EN LA SESIÓN
+            session.setAttribute("usuarioId", u.getId());
+            session.setAttribute("username", u.getUsername());
+            session.setAttribute("rol", u.getRol());
+            session.setAttribute("nombreUsuario", u.getNombreCompleto());
 
             return "redirect:/transacciones/list";
 
-        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
-            // Este error ocurre específicamente cuando el username NO existe en la tabla
-            model.addAttribute("error", "El usuario '" + username + "' no existe en la base de datos.");
-            return "login";
         } catch (Exception e) {
-            // Esto imprimirá en tu consola de VS Code el error real (permisos, red, etc.)
-            e.printStackTrace();
-            model.addAttribute("error", "Error de conexión o base de datos: " + e.getMessage());
+            model.addAttribute("error", "Usuario no encontrado");
             return "login";
         }
     }

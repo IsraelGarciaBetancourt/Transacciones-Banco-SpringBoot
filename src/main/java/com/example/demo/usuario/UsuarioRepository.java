@@ -27,9 +27,8 @@ public class UsuarioRepository implements UsuarioDAO {
                     rs.getString("nombre_completo"),
                     rs.getString("rol"),
                     rs.getBoolean("activo"),
-                    // Agregamos validación de nulos para las fechas
-                    rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null,
-                    rs.getTimestamp("updated_at") != null ? rs.getTimestamp("updated_at").toLocalDateTime() : null
+                    rs.getTimestamp("created_at").toLocalDateTime(),
+                    rs.getTimestamp("updated_at").toLocalDateTime()
             );
         }
     };
