@@ -67,6 +67,8 @@ public class TransaccionRepository implements TransaccionDAO {
         return jdbc.query(sql, mapper);
     }
 
+
+
     @Override
     public void guardar(Transaccion t) {
         String sql = "INSERT INTO transacciones (usuario_id, monto, tipo_transaccion, descripcion, fecha_transaccion) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";

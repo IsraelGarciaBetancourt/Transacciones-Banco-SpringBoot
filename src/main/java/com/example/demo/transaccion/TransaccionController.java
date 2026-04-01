@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpSession;
 import com.example.demo.usuario.Usuario;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.List;
 
 @Controller
 @RequestMapping("/transacciones")
@@ -23,6 +26,12 @@ public class TransaccionController {
     public String listar(Model model) {
         model.addAttribute("transacciones", service.listar());
         return "transacciones/transacciones";
+    }
+
+    @GetMapping("/api/list")
+    @ResponseBody
+    public List<Transaccion> listarParaInsomnia() {
+        return service.listar();
     }
 
     @GetMapping("/nuevo")
